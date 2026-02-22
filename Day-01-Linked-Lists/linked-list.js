@@ -32,7 +32,7 @@ class LinkList {
     let current = this.head;
     let currentArray = [];
     while (current !== null) {
-      currentArray.push(current);
+      currentArray.push(current.value);
       current = current.next;
     }
     return currentArray;
@@ -117,22 +117,8 @@ class LinkList {
 
     const newNode = new Node(value);
 
-    // Case 1: Insert at the beginning
-    if (index === 0) {
-      newNode.next = this.head;
-      this.head = newNode;
-      if (this.length === 0) this.tail = newNode; // If list was empty
-      this.length++;
-      return this;
-    }
-
-    // Case 2: Insert at the end
-    if (index === this.length) {
-      this.tail.next = newNode;
-      this.tail = newNode;
-      this.length++;
-      return this;
-    }
+    if (index === 0) return this.unshift(value);
+    if (index === this.length) return this.push(value);
 
     // Case 3: Insert in the middle
     let prev = this.head;
@@ -147,6 +133,19 @@ class LinkList {
     this.length++;
 
     return this;
+  }
+
+  count(value) {
+    if (this.length === 0) return 0;
+    let currentNode = this.head;
+    let repeated = 0;
+    while (currentNode !== null) {
+      if (currentNode.value === value) {
+        repeated++;
+      }
+      currentNode = currentNode.next;
+    }
+    return repeated;
   }
 }
 
