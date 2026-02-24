@@ -147,6 +147,25 @@ class LinkList {
     }
     return repeated;
   }
+  reverse() {
+    if (this.length === 0) return null;
+    if (this.length === 1) return this;
+
+    let prev = null;
+    let current = this.head;
+
+    this.tail = this.head;
+
+    while (current !== null) {
+      let next = current.next;
+      current.next = prev;
+      prev = current;
+      current = next;
+    }
+
+    this.head = prev;
+    return this;
+  }
 }
 
 const list = new LinkList();
