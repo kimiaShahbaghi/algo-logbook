@@ -12,6 +12,7 @@ class LinkList {
     this.length = 0;
   }
   push(value) {
+    if (value === undefined) return this;
     const newNode = new Node(value);
     if (this.length === 0) {
       this.head = newNode;
@@ -39,7 +40,7 @@ class LinkList {
   }
 
   pop() {
-    if (this.length === 0) return "list is empty";
+    if (this.length === 0) return this;
     if (this.length === 1) {
       this.head = null;
       this.tail = null;
@@ -57,7 +58,7 @@ class LinkList {
     }
   }
   shift() {
-    if (!this.length) return "empty list";
+    if (!this.length) return this;
     if (this.length === 1) {
       this.head = null;
       this.tail = null;
@@ -113,7 +114,7 @@ class LinkList {
     }
   }
   insert(index, value) {
-    if (index < 0 || index > this.length) return null;
+    if (index < 0 || index > this.length) return "out of list range";
 
     const newNode = new Node(value);
 
@@ -136,7 +137,7 @@ class LinkList {
   }
 
   count(value) {
-    if (this.length === 0) return 0;
+    if (this.length === 0 || value === undefined) return 0;
     let currentNode = this.head;
     let repeated = 0;
     while (currentNode !== null) {
@@ -148,8 +149,7 @@ class LinkList {
     return repeated;
   }
   reverse() {
-    if (this.length === 0) return null;
-    if (this.length === 1) return this;
+    if (this.length === 0 || this.length === 1) return this;
 
     let prev = null;
     let current = this.head;
@@ -165,6 +165,25 @@ class LinkList {
 
     this.head = prev;
     return this;
+  }
+
+  remove(index) {
+    if (index < 0 || index >= this.length) return this;
+    if (index === 0) return this.shift();
+    if (index === this.length - 1) return this.pop();
+    else {
+      let prev = null;
+      let currentNode = this.head;
+      let currentIndex = 0;
+      while (currentIndex < index) {
+        currentIndex++;
+        prev = currentNode;
+        currentNode = currentNode.next;
+      }
+      prev.next = currentNode.next;
+      this.length--;
+      return this;
+    }
   }
 }
 
